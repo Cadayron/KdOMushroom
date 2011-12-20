@@ -1,6 +1,6 @@
 ## Interface: 40300
 ## Author: Cadayron
-## Version: 1.1
+## Version: 1.2
 ## Title: |c0200dd00KdO|r Wild Mushroom|r
 ## Notes: Minimal wild mushroom tracker.
 ## Dependencies: ElvUI
