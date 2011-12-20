@@ -6,7 +6,6 @@ if E.myclass ~= "DRUID" then return end
 local mushWidth = (DF.unitframe.layouts.Primary.player.width - (E:Scale(2)))/3 --86
 local mushHeight = DF.unitframe.layouts.Primary.player.power.height
 local tMushroom = {}
-tMushroom = CreateFrame("Frame", "tMushroom", ElvUF_Player)
 
 local function FormatTime(s)
 	local day, hour, minute = 86400, 3600, 60
@@ -21,6 +20,7 @@ local function FormatTime(s)
 	end
 	return format("%.1f", s)
 end
+
 
 local OnEvent = function(self, event, slot)
 	local haveTotem = GetTotemInfo(slot)
@@ -53,31 +53,40 @@ local OnHide = function(self)
 	self:SetScript("OnUpdate", nil)
 end
 
-for i = 1, 3 do
-	tMushroom[i] = CreateFrame("Frame", "tMushroom"..i, tMushroom)
 
-	tMushroom[i]:SetFrameLevel(0)
-	tMushroom[i]:Size(mushWidth, mushHeight)
-	tMushroom[i]:SetTemplate("Default")
-	tMushroom[i].slot = i
-	tMushroom[i]:Hide()
-	tMushroom[i]:SetScript("OnShow", OnShow)
-	tMushroom[i]:SetScript("OnHide", OnHide)
-	
-	if i == 1 then
-		tMushroom[i]:ClearAllPoints()
-		tMushroom[i]:Point("BOTTOMLEFT", ElvUF_Player, "TOPLEFT", 0, 1)
-	else
-		tMushroom[i]:Point("TOPLEFT", tMushroom[i-1], "TOPRIGHT", 1, 0) 
+local LoadtMushroom = function(self)
+
+tMushroom = CreateFrame("Frame", "tMushroom", ElvUF_Player)
+
+	for i = 1, 3 do
+		tMushroom[i] = CreateFrame("Frame", "tMushroom"..i, tMushroom)
+		tMushroom[i]:SetFrameLevel(0)
+		tMushroom[i]:Size(mushWidth, mushHeight)
+		tMushroom[i]:SetTemplate("Default")
+		tMushroom[i].slot = i
+		tMushroom[i]:Hide()
+		tMushroom[i]:SetScript("OnShow", OnShow)
+		tMushroom[i]:SetScript("OnHide", OnHide)
+		
+		if i == 1 then
+			tMushroom[i]:ClearAllPoints()
+			tMushroom[i]:Point("BOTTOMLEFT", ElvUF_Player, "TOPLEFT", 0, 1)
+		else
+			tMushroom[i]:Point("TOPLEFT", tMushroom[i-1], "TOPRIGHT", 1, 0) 
+		end
+		
+		tMushroom[i].status = CreateFrame("StatusBar", "status"..i, tMushroom[i])
+		tMushroom[i].status:SetStatusBarTexture(E["media"].normTex)
+		tMushroom[i].status:SetFrameLevel(6)
+		tMushroom[i].status:Point("TOPLEFT", tMushroom[i], "TOPLEFT", 2, -2)
+		tMushroom[i].status:Point("BOTTOMRIGHT", tMushroom[i], "BOTTOMRIGHT", -2, 2)
 	end
-	
-	tMushroom[i].status = CreateFrame("StatusBar", "status"..i, tMushroom[i])
-	tMushroom[i].status:SetStatusBarTexture(E["media"].normTex)
-	tMushroom[i].status:SetFrameLevel(6)
-	tMushroom[i].status:Point("TOPLEFT", tMushroom[i], "TOPLEFT", 2, -2)
-	tMushroom[i].status:Point("BOTTOMRIGHT", tMushroom[i], "BOTTOMRIGHT", -2, 2)
+	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 local UpdateMushroom = CreateFrame("Frame")
 UpdateMushroom:RegisterEvent("PLAYER_TOTEM_UPDATE")
-UpdateMushroom:SetScript("OnEvent", OnEvent)
+UpdateMushroom:SetScript("OnEvent",OnEvent)
+local MushroomLoad = CreateFrame("Frame")
+MushroomLoad:RegisterEvent("PLAYER_ENTERING_WORLD")
+MushroomLoad:SetScript("OnEvent",LoadtMushroom)
