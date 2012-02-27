@@ -3,8 +3,8 @@
 local E, L, DF = unpack(ElvUI)
 
 if E.myclass ~= "DRUID" then return end
-local mushWidth = (DF.unitframe.layouts.Primary.player.width - (E:Scale(2)))/3 --86
-local mushHeight = DF.unitframe.layouts.Primary.player.power.height
+local mushWidth = (DF.unitframe.units.player.width - (E:Scale(2)))/3 --86
+local mushHeight = DF.unitframe.units.player.power.height
 local tMushroom = {}
 
 local function FormatTime(s)
