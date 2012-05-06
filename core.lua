@@ -1,10 +1,11 @@
 -- Wild Mushroom Tracker Addon by Cadayron (ElvUI only)
 -- Credits to Hydra and Smelly for code inspiration
-local E, L, DF = unpack(ElvUI)
+local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 if E.myclass ~= "DRUID" then return end
-local mushWidth = (DF.unitframe.units.player.width - (E:Scale(2)))/3 --86
-local mushHeight = DF.unitframe.units.player.power.height
+local mushWidth = (P.unitframe.units.player.width - (E:Scale(2)))/3 --86
+print(mushWidth)
+local mushHeight = P.unitframe.units.player.power.height
 local tMushroom = {}
 
 local function FormatTime(s)
