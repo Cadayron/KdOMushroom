@@ -4,7 +4,6 @@ local E, L, V, P, G = unpack(ElvUI); --Inport: Engine, Locales, PrivateDB, Profi
 
 if E.myclass ~= "DRUID" then return end
 local mushWidth = (P.unitframe.units.player.width - (E:Scale(2)))/3 --86
-print(mushWidth)
 local mushHeight = P.unitframe.units.player.power.height
 local tMushroom = {}
 
